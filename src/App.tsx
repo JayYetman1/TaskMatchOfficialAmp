@@ -44,42 +44,51 @@
 
 // export default App;
 
+import { useAuthenticator } from '@aws-amplify/ui-react';
+import { generateClient } from 'aws-amplify/data';
+import type { Schema } from '../amplify/data/resource';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { Authenticator } from "@aws-amplify/ui-react";
+const client = generateClient<Schema>();
 
-import TodoApp from "./TodoApp";
-//import LegacyApp from "./legacy/App";
+function App() {
+  const { signOut } = useAuthenticator();
+  const [todos, setTodos] = useState<Array<Schema['Todo']['type']>>([]);
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  // Authenticator will redirect to SignIn if not logged in
-  return <Authenticator>{() => <>{children}</>}</Authenticator>;
-}
+  useEffect(() => {
+    client.models.Todo.observeQuery().subscribe({
+      next: (data) => setTodos([...data.items]),
+    });
+  }, []);
 
-export default function App() {
+  function createTodo() {
+    const content = window.prompt('Todo content');
+    if (content) {
+      client.models.Todo.create({ content });
+    }
+  }
+
   return (
-    <Routes>
-      {/* Default → /todos */}
-      <Route path="/" element={<Navigate to="/todos" replace />} />
+    <main>
+      <h1>My todos</h1>
+      <button onClick={createTodo}>+ new</button>
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>{todo.content}</li>
+        ))}
+      </ul>
 
-      {/* /todos is protected */}
-      <Route
-        path="/todos"
-        element={
-          <ProtectedRoute>
-            <TodoApp />
-          </ProtectedRoute>
-        }
-      />
+      <div style={{ marginTop: '2rem' }}>
+        <Link to="/taskmatch">
+          <button>Go to TaskMatch Site</button>
+        </Link>
+      </div>
 
-      {/* /site/* serves your legacy site (public) */}
-      {/* <Route path="/site/*" element={<LegacyApp />} /> */}
-
-      {/* Fallback */}
-      <Route path="*" element={<Navigate to="/todos" replace />} />
-    </Routes>
+      <button onClick={signOut}>Sign out</button>
+    </main>
   );
 }
 
-// line 77 was commented out
+export default App;
+
