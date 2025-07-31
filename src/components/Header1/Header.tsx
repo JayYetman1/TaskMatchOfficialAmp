@@ -1,8 +1,9 @@
-import { View, Heading, Flex} from '@aws-amplify/ui-react';
-//import { useNavigate } from 'react-router-dom';
+import { View, Heading, Flex, Button} from '@aws-amplify/ui-react';
+import { useNavigate } from 'react-router-dom';
 import Right_Side_Header from './Right_Side_Header';
 
 export default function Header() {
+  const navigate = useNavigate();
 
   return (
     <View
@@ -27,6 +28,13 @@ export default function Header() {
           <Heading level={3} fontSize="1.5rem">
             TaskMatch Home
           </Heading>
+          <Button 
+            variation="link" 
+            onClick={() => navigate('/')}
+            fontSize="0.9rem"
+          >
+            ← Back to My Todos
+          </Button>
         </Flex>
 
         {/* RIGHT SIDE */}

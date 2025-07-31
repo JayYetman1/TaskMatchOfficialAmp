@@ -10,7 +10,7 @@ export default function ThirdHeader({
   const navigate = useNavigate();
 
   const handlePostTask = () => {
-    navigate('/other');
+    navigate('/taskmatch/other');
   };
 
   return (
