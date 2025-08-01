@@ -31,7 +31,10 @@ export default function AppWrapper({ children, isTaskMatch = false }: AppWrapper
       height: '100vh',
       width: '100vw',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      position: 'absolute',
+      top: 0,
+      left: 0
     }}>
       <main style={{
         display: 'flex',
