@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Authenticator } from "@aws-amplify/ui-react";
+import BlankPage from "./components/BlankPage";
 import OldApp from "./OldApp";
 import "./index.css";
 import { Amplify } from "aws-amplify";
@@ -46,7 +47,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       >
         <BrowserRouter>
           <Routes>
-            <Route path="/*" element={<OldApp />} />
+            <Route path="/" element={<BlankPage />} />
+            <Route path="/home/*" element={<OldApp />} />
           </Routes>
         </BrowserRouter>
       </Authenticator>
