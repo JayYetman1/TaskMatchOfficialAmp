@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Authenticator } from "@aws-amplify/ui-react";
-import App from "./App";
 import OldApp from "./OldApp";
 import "./index.css";
 import { Amplify } from "aws-amplify";
@@ -47,8 +46,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       >
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="/taskmatch/*" element={<OldApp />} />
+            <Route path="/*" element={<OldApp />} />
           </Routes>
         </BrowserRouter>
       </Authenticator>

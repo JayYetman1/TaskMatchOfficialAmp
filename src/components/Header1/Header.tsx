@@ -1,9 +1,9 @@
-import { View, Heading, Flex, Button} from '@aws-amplify/ui-react';
-import { useNavigate } from 'react-router-dom';
+import { View, Heading, Flex, Button } from '@aws-amplify/ui-react';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import Right_Side_Header from './Right_Side_Header';
 
 export default function Header() {
-  const navigate = useNavigate();
+  const { signOut } = useAuthenticator();
 
   return (
     <View
@@ -13,32 +13,36 @@ export default function Header() {
     >
       <Flex
         direction="row"
-        justifyContent="space-evenly"
+        justifyContent="space-between"
         alignItems="center"
         height="100%"
-        padding="1rem"                   // ↓ a bit less horizontal padding
+        padding="1rem"
       >
         {/* LEFT SIDE: Heading + centered button */}
         <Flex
           direction="column"
-          alignItems="center"              // ↓ center horizontally
-          justifyContent="center"          // ↓ center vertically
-          gap="0.5rem"                     // ↓ less gap between items
+          alignItems="center"
+          justifyContent="center"
+          gap="0.5rem"
         >
           <Heading level={3} fontSize="1.5rem">
             TaskMatch Home
           </Heading>
-          <Button 
-            variation="link" 
-            onClick={() => navigate('/')}
-            fontSize="0.9rem"
-          >
-            ← Back to My Todos
-          </Button>
         </Flex>
 
-        {/* RIGHT SIDE */}
+        {/* MIDDLE: Navigation */}
         <Right_Side_Header />
+
+        {/* RIGHT SIDE: Sign Out Button */}
+        <Flex alignItems="center">
+          <Button 
+            variation="destructive"
+            onClick={signOut}
+            size="small"
+          >
+            Sign Out
+          </Button>
+        </Flex>
       </Flex>
     </View>
   );

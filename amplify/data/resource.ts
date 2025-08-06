@@ -11,7 +11,18 @@ const schema = a.schema({
     .model({
       content: a.string(),
     })
-    // .authorization((allow) => [allow.publicApiKey()]),
+    .authorization((allow) => [allow.owner()]),
+  
+  Task: a
+    .model({
+      title: a.string().required(),
+      description: a.string(),
+      location: a.string(),
+      budget: a.string(),
+      dueDate: a.string(),
+      status: a.string().default("Open"),
+      postedDate: a.string(),
+    })
     .authorization((allow) => [allow.owner()]),
 });
 

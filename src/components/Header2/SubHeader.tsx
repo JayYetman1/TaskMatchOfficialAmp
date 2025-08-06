@@ -14,11 +14,11 @@ export default function SubHeader({
   const navigate = useNavigate();
 
   const handlePostTask = () => {
-    navigate('/taskmatch/other');
+    navigate('/other');
   };
 
   const handleExplain = () => {
-    navigate('/taskmatch/explanation');
+    navigate('/explanation');
   };
 
   return (
